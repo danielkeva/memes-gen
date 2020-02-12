@@ -1,24 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <title>Meme Generator</title>
 </head>
-<body>
+
+<body onload="onInit()">
     <header>
         <h1>Meme Generator</h1>
         <nav></nav>
     </header>
-
     <main>
+        <div class="canvas-container">
+            <div class="lin-controls">
+                <input type="text" name="text" id="text" onkeyup="onUpdateLine(this.value)">
+            </div>
+            <canvas id="my-canvas" height="550" width="550" style="border: 1px solid black;">
+            </canvas>
+            <img src="" alt="" style="display: none;">
+        </div>
+
+        <div class="gallery-container">
+          
+        </div>
 
     </main>
-
-<footer></footer>
+    <footer></footer>
 
     <script src="js/service.js"></script>
     <script src="js/main.js"></script>
 </body>
+
 </html>
