@@ -34,7 +34,7 @@ function drawText(text, x, y) {
     gCtx.lineWidth = '3'
     gCtx.strokeStyle = 'black'
     gCtx.fillStyle = 'white'
-    gCtx.font = '5 0px Impact'
+    gCtx.font = '50px Impact'
     gCtx.textAlign = 'center'
     gCtx.fillText(text, x, y)
     gCtx.strokeText(text, x, y)
