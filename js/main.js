@@ -21,25 +21,29 @@ function drawOnCanvas() {
 
 function onDrawImg() {
     var txt = getTxtToDisplay()
+    var line = getSelectedLine()
+    var lines = getLines()
     var img = new Image()
     img.src = getSelectedImg()
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
-        if (!txt) return
-        drawText(txt, gCanvas.width / 2, linePosY)
-        // gCtx.save();
+        lines.forEach(line => {
+            if (!line.txt) return
+            drawText(line.txt, line.posX, line.posY, line.size)
+        })
+
 
     }
 
 }
 
 
-function drawText(text, x, y) {
+function drawText(text, x, y, fontSize) {
     var selectedLine = getSelectedLine()
     gCtx.lineWidth = '3'
     gCtx.strokeStyle = 'black'
     gCtx.fillStyle = 'white'
-    gCtx.font = selectedLine.size + 'px Impact'
+    gCtx.font = fontSize + 'px Impact'
     gCtx.textAlign = 'center'
     gCtx.fillText(text, x, y)
     gCtx.strokeText(text, x, y)
@@ -73,6 +77,7 @@ function onUpdateSelectedImg(imgId) {
 }
 
 function onChangeFontSize(diff) {
+    // debugger
     changeFontSize(diff)
 
     onDrawImg()
@@ -82,10 +87,19 @@ function onChangeFontSize(diff) {
 
 
 function onChangeLine(diff) {
-    linePosY += diff
+    updateLinePosY(diff)
     onDrawImg()
 }
 
+function onSwitchLine() {
+    var currLine = getSelectedLineIdx()
+    if (currLine === 0) {
+        currLine = 1
+    } else {
+        currLine = 0
+    }
+    updateSelectedLine(currLine)
+}
 
 
 

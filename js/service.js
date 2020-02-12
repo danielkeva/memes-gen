@@ -6,6 +6,16 @@ var gMeme = {
         {
             txt: null,
             size: 40,
+            posX: 225,
+            posY: 70,
+            align: 'left',
+            color: 'red'
+        },
+        {
+            txt: null,
+            size: 40,
+            posX: 225,
+            posY: 400,
             align: 'left',
             color: 'red'
         }
@@ -15,7 +25,18 @@ var gMeme = {
 var gImgs = createImgs()
 
 
-function getSelectedLine(){
+function getLines() {
+    return gMeme.lines
+}
+
+function updateSelectedLine(idx) {
+    gMeme.selectedLineIdx = idx
+}
+
+function getSelectedLineIdx() {
+    return gMeme.selectedLineIdx
+}
+function getSelectedLine() {
     return gMeme.lines[gMeme.selectedLineIdx]
 }
 
@@ -57,4 +78,9 @@ function updateSelectedImg(imgId) {
 
 function changeFontSize(diff) {
     gMeme.lines[gMeme.selectedLineIdx].size += diff
+}
+
+function updateLinePosY(diff) {
+    gMeme.lines[gMeme.selectedLineIdx].posY += diff
+
 }
