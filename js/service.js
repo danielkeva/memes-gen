@@ -5,7 +5,7 @@ var gMeme = {
     lines: [
         {
             txt: null,
-            size: 20,
+            size: 40,
             align: 'left',
             color: 'red'
         }
@@ -15,7 +15,9 @@ var gMeme = {
 var gImgs = createImgs()
 
 
-
+function getSelectedLine(){
+    return gMeme.lines[gMeme.selectedLineIdx]
+}
 
 function getSelectedImg() {
     var img = gImgs.find(img => {
@@ -50,5 +52,9 @@ function getImgsToDisplay() {
 
 function updateSelectedImg(imgId) {
     gMeme.selectedImgId = imgId
-    
+
+}
+
+function changeFontSize(diff) {
+    gMeme.lines[gMeme.selectedLineIdx].size += diff
 }

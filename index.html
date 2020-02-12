@@ -17,6 +17,10 @@
         <div class="canvas-container">
             <div class="lin-controls">
                 <input type="text" name="text" id="text" onkeyup="onUpdateLine(this.value)">
+                <button onclick="onChangeFontSize(10)" class="increase-btn">+</button>
+                <button onclick="onChangeFontSize(-10)"class="decrease-btn">-</button>
+                <button onclick="onChangeLine(-10)" class="move-line-btn">Up</button>
+                <button onclick="onChangeLine(+10)" class="move-line-btn">Down</button>
             </div>
             <canvas id="my-canvas" height="450" width="450" style="border: 1px solid black;">
             </canvas>
