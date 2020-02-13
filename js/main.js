@@ -2,26 +2,19 @@
 
 var gCanvas;
 var gCtx;
-var linePosY = 70
 
 function onInit() {
-
+    document.querySelector('.meme-container').style.display = 'none';
     gCanvas = document.getElementById('my-canvas')
     gCtx = gCanvas.getContext('2d')
-    drawOnCanvas()
     renderGallery()
-}
-
-function drawOnCanvas() {
-    onDrawImg()
-
+    renderCanvas()
 
 }
 
 
-function onDrawImg() {
-    var txt = getTxtToDisplay()
-    var line = getSelectedLine()
+
+function renderCanvas() {
     var lines = getLines()
     var img = new Image()
     img.src = getSelectedImg()
@@ -29,35 +22,45 @@ function onDrawImg() {
         gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
         lines.forEach(line => {
             if (!line.txt) return
-            drawText(line.txt, line.posX, line.posY, line.size)
+            drawText(line.txt, line.posX, line.posY, line.size, line.align, line.color, line.font)
         })
-
-
+        drawMark()
     }
 
 }
 
+function drawMark() {
+    var line = getSelectedLine()
+    // if (!line.txt) return
+    var fontsize = line.size;
+    var lineHeight = fontsize * 1.286;
+    var textWidth = gCtx.measureText(line.txt).width;
+    gCtx.lineWidth = '4'
 
-function drawText(text, x, y, fontSize) {
-    var selectedLine = getSelectedLine()
-    gCtx.lineWidth = '3'
+    if (line.align === 'center') {
+        gCtx.strokeRect(line.posX - textWidth / 2 - 10, line.posY - lineHeight + 10, textWidth + 17, lineHeight);
+    } else if (line.align === 'end') {
+        gCtx.strokeRect(line.posX - textWidth - 8, line.posY - lineHeight + 10, textWidth + 17, lineHeight);
+    } else {
+        gCtx.strokeRect(line.posX - 8, line.posY - lineHeight + 10, textWidth + 17, lineHeight);
+    }
+}
+
+
+function drawText(text, x, y, fontSize, align, color, fontFamily) {
+    gCtx.lineWidth = '10'
     gCtx.strokeStyle = 'black'
-    gCtx.fillStyle = 'white'
-    gCtx.font = fontSize + 'px Impact'
-    gCtx.textAlign = 'center'
-    gCtx.fillText(text, x, y)
+    gCtx.fillStyle = color
+    gCtx.font = fontSize + 'px ' + fontFamily
+    gCtx.textAlign = align
     gCtx.strokeText(text, x, y)
-
+    gCtx.fillText(text, x, y)
 }
 
 function onUpdateLine(txt) {
     updateLine(txt)
-
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
-
-    onDrawImg()
-
-
+    renderCanvas()
 }
 
 function renderGallery() {
@@ -70,36 +73,78 @@ function renderGallery() {
     var elGalleryContainer = document.querySelector('.gallery-container')
     elGalleryContainer.innerHTML = strHTMLs.join('')
 }
-
 function onUpdateSelectedImg(imgId) {
     updateSelectedImg(imgId)
-    onDrawImg()
+    document.querySelector('.meme-container').style.display = 'block';
+    document.querySelector('.gallery').style.display = 'none'
+    renderCanvas()
+
+    // resizeCanvas()
 }
 
 function onChangeFontSize(diff) {
-    // debugger
     changeFontSize(diff)
-
-    onDrawImg()
-    // gCtx.restore()
+    renderCanvas()
 }
 
 
 
 function onChangeLine(diff) {
     updateLinePosY(diff)
-    onDrawImg()
+    renderCanvas()
+}
+
+
+function onSetAlign(alignType) {
+    setAlign(alignType)
+    renderCanvas()
+
+}
+
+function onDisplayGallery() {
+    document.querySelector('.gallery').style.display = 'block'
+    document.querySelector('.meme-container').style.display = 'none';
+}
+
+function resizeCanvas() { // not finished 
+    var elContainer = document.querySelector('.canvas-container');
+    
+    gCanvas.width = elContainer.offsetWidth
+    gCanvas.height = elContainer.offsetWidth
+    renderCanvas()
+}
+
+
+function downloadCanvas(elLink) {
+    renderCanvas()
+    const data = gCanvas.toDataURL()
+    elLink.href = data
+    elLink.download = 'meme'
+}
+
+function onSetColor(color) {
+    setColor(color)
+    renderCanvas()
+
 }
 
 function onSwitchLine() {
-    var currLine = getSelectedLineIdx()
-    if (currLine === 0) {
-        currLine = 1
-    } else {
-        currLine = 0
-    }
-    updateSelectedLine(currLine)
+
+    updateSelectedLine()
+    renderCanvas()
 }
 
+function onDeleteLine() {
+    deleteLine()
+    renderCanvas()
+}
 
+function onAddLine() {
+    addLine()
+    renderCanvas()
+}
 
+function onChangeFont(font) {
+    changeFont(font)
+    renderCanvas()
+}

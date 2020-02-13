@@ -1,10 +1,12 @@
 /* Base */
+
 * {
     box-sizing: border-box;
 }
 
 html {
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: Impact;
+    
 }
 
 body {
@@ -12,9 +14,129 @@ body {
     font-size: 1rem;
 }
 
-canvas{
-    display: block;
-    margin: 20px auto;
+a {
+    text-decoration: none;
+}
+
+/* nav */
+
+.main-nav-container {
+    background-color: #ff7f00;
+    display: flex;
+    padding: 1.5rem;
+    justify-content: space-between;
+}
+
+.main-nav {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.main-nav>li>a {
+    text-align: center;
+    color: white;
+    margin-right: 50px;
+}
+
+.main-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.logo {
+    font-size: 1.5rem;
+}
+
+/* canvas */
+
+.canvas-main-container {
+    max-width: 1000px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.canvas-container {
+    width: 50%;
+}
+
+/* editor controls */
+
+.editor-container>* {
+    border-radius: 8px;
+}
+
+.editor-container * {
+    border-radius: 8px;
+    margin-right: 18px;
+}
+
+.editor-container button {
+    font-size: 2.5rem;
+    width: 3.75rem;
+    height: 3.75rem;
+}
+
+#color {
+    opacity: 0;
+    position: relative;
+}
+
+.color-picker {
+    /* position: absolute; */
+    display: inline-block;
+    position: relative;
+}
+
+#color {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 3.75rem;
+}
+
+.font-fam {
+    width: 218px;
+    height: 60px;
+}
+
+.export-btns-container button {
+    font-size: 1.25rem;
+    width: 120px;
+    height: 60px;
+}
+
+.editor-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.txt-input-container {
+    flex-grow: 1;
+}
+
+.txt-input {
+    font-size: 1.25rem;
+    align-self: stretch;
+    padding: 1rem;
+}
+
+.txt-style-container {
+    display: flex;
+    flex-grow: 8;
+}
+
+.line-btns-container {
+    flex-grow: 5;
+}
+
+.txt-align-container {
+    flex-grow: 1;
 }
 
 .gallery-container {
@@ -24,6 +146,22 @@ canvas{
 }
 
 .gallery-container img {
-    width:100%;
+    width: 100%;
     /* height:200px; */
+}
+
+@media (max-width:740px) {
+    .main-container {
+        max-width: 400px;
+    }
+    .canvas-main-container {
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        /* grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr; */
+    }
+    /* .canvas-container{
+      width:100%;
+  } */
 }

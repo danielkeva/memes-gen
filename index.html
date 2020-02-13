@@ -9,32 +9,83 @@
 </head>
 
 <body onload="onInit()">
-    <header>
-        <h1>Meme Generator</h1>
-        <nav></nav>
-    </header>
-    <main>
-        <div class="canvas-container">
-            <div class="lin-controls">
-                <input type="text" name="text" id="text" onkeyup="onUpdateLine(this.value)">
-                <button onclick="onChangeFontSize(10)" class="increase-btn">+</button>
-                <button onclick="onChangeFontSize(-10)"class="decrease-btn">-</button>
-                <button onclick="onChangeLine(-10)" class="move-line-btn">Up</button>
-                <button onclick="onChangeLine(+10)" class="move-line-btn">Down</button>
-                <button onclick="onSwitchLine()" class="switch-line">Switch Line</button>
-            </div>
-            <canvas id="my-canvas" height="450" width="450" style="border: 1px solid black;">
-            </canvas>
-            <img src="" alt="" style="display: none;">
+
+
+    <nav>
+        <div class="main-nav-container">
+            <div class="logo">Memegen</div>
+            <ul class="main-nav  flex ">
+                <li><a onclick="onDisplayGallery()" href="#">My gallery</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <main class="main-container">
+        <section class="meme-container">
+            <div class="canvas-main-container">
+                <div class="canvas-container">
+                    <canvas id="my-canvas" height="450" width="450" style="border: 1px solid black;">
+                    </canvas>
+                </div>
+                <img src="" alt="" style="display: none;">
+
+                <div class="editor-container">
+                    <div class="txt-input-container"><input class="txt-input" type="text" name="text" id="text"
+                            onkeyup="onUpdateLine(this.value)"></div>
+                    <div class="line-btns-container">
+
+                        <button onclick="onChangeLine(-10)" class="move-line-btn fas fa-long-arrow-alt-up"></button>
+                        <button onclick="onChangeLine(+10)" class="move-line-btn fas fa-long-arrow-alt-down"></button>
+                        <button onclick="onSwitchLine()" class="switch-line fas fa-arrows-alt-v"></button>
+                        <button onclick="onAddLine()" class="add-line-btn">+</button>
+                        <button onclick="onDeleteLine()" class="delete-btn fas fa-trash-alt"></button>
+                    </div>
+
+                    <div class="txt-align-container">
+                        <button onclick="onChangeFontSize(10)" class="increase-btn fas fa-font ">+</button>
+                        <button onclick="onChangeFontSize(-10)" class="decrease-btn fas fa-font">-</button>
+                        <button value="end" onclick="onSetAlign(this.value)"
+                            class="align-left-btn fas fa-align-left"></button>
+                        <button value="center" onclick="onSetAlign(this.value)"
+                            class="align-center-btn fas fa-align-center"></button>
+                        <button value="start" onclick="onSetAlign(this.value)"
+                            class="align-right-btn fas fa-align-right"></button>
+                    </div>
+
+                    <div class="txt-style-container">
+                        <select onchange="onChangeFont(value)" class="font-fam" id="fonts">
+                            <option value="Impact">Impact</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Courier New">Courier New</option>
+                        </select>
+                        <div class="color-picker">
+                            <button class="color-btn fas fa-palette"></button>
+                            <input type="color"  name="" id="color" onchange="onSetColor(this.value)">
+                        </div>
+                    </div>
+
+                    <div class="export-btns-container">
+                        <button class="download-btn"> <a href="#" onclick="downloadCanvas(this)"
+                                download="">Download</a></button>
+                        <button class="share-btn">Share</button>
+                    </div>
+                </div>
+        </section>
         </div>
 
-        <div class="gallery-container">
-          
-        </div>
+        <section class="gallery">
+            <div class="gallery-container">
+
+            </div>
 
     </main>
+    </section>
     <footer></footer>
 
+
+    <script src="https://kit.fontawesome.com/e180c8193f.js" crossorigin="anonymous"></script>
     <script src="js/service.js"></script>
     <script src="js/main.js"></script>
 </body>
