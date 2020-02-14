@@ -6,7 +6,6 @@
 
 html {
     font-family: Impact;
-    
 }
 
 body {
@@ -41,7 +40,7 @@ a {
 }
 
 .main-container {
-    max-width: 1000px;
+    max-width: 1020px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -50,16 +49,15 @@ a {
     font-size: 1.5rem;
 }
 
+main {
+    background-color: #e3e3e39e;
+}
+
 /* canvas */
 
 .canvas-main-container {
-    max-width: 1000px;
     display: flex;
     justify-content: space-between;
-}
-
-.canvas-container {
-    width: 50%;
 }
 
 /* editor controls */
@@ -70,13 +68,27 @@ a {
 
 .editor-container * {
     border-radius: 8px;
-    margin-right: 18px;
+    margin-right: 8px;
 }
 
 .editor-container button {
-    font-size: 2.5rem;
+    font-size: 2rem;
     width: 3.75rem;
-    height: 3.75rem;
+    padding: 0.75rem;
+    background-color: white;
+    border: 0;
+}
+
+.decrease-btn::after {
+    content: '\f068';
+    vertical-align: top;
+    font-size: 0.625rem;
+}
+
+.increase-btn::after {
+    content: "\f067";
+    vertical-align: top;
+    font-size: 0.625rem;
 }
 
 #color {
@@ -100,8 +112,9 @@ a {
 }
 
 .font-fam {
-    width: 218px;
+    width: 160px;
     height: 60px;
+    background-color: white;
 }
 
 .export-btns-container button {
@@ -117,31 +130,33 @@ a {
 }
 
 .txt-input-container {
-    flex-grow: 1;
+    flex-grow: 0.5;
+    width: 100%;
 }
 
 .txt-input {
     font-size: 1.25rem;
     align-self: stretch;
     padding: 1rem;
+    width: 100%;
 }
 
 .txt-style-container {
     display: flex;
-    flex-grow: 8;
+    flex-grow: 2;
 }
 
 .line-btns-container {
-    flex-grow: 5;
+    flex-grow: 1;
 }
 
 .txt-align-container {
-    flex-grow: 1;
+    flex-grow: 0.5;
 }
 
 .gallery-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     grid-gap: 10px;
 }
 
@@ -150,18 +165,25 @@ a {
     /* height:200px; */
 }
 
+.footer-container {
+    background-color: #ff7f00;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px;
+}
+
 @media (max-width:740px) {
     .main-container {
-        max-width: 400px;
+        max-width: 600px;
     }
     .canvas-main-container {
-        width: 400px;
-        display: flex;
         flex-direction: column;
-        /* grid-template-rows: 1fr 1fr;
-        grid-template-columns: 1fr; */
     }
-    /* .canvas-container{
-      width:100%;
-  } */
+    .canvas-container {
+        width: 100%;
+    }
+    .editor-container * {
+        margin-bottom: 0.5rem;
+    }
 }

@@ -77,9 +77,9 @@ function onUpdateSelectedImg(imgId) {
     updateSelectedImg(imgId)
     document.querySelector('.meme-container').style.display = 'block';
     document.querySelector('.gallery').style.display = 'none'
+    resizeCanvas()
     renderCanvas()
 
-    // resizeCanvas()
 }
 
 function onChangeFontSize(diff) {
