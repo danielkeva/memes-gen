@@ -13,7 +13,7 @@
 
     <nav>
         <div class="main-nav-container">
-            <div class="logo">Memegen</div>
+            <div onclick="onDisplayGallery()" class="logo">Memegen</div>
             <div class="menu-btn" onclick="toggleNav(this)">
                 <div class="bar1"></div>
                 <div class="bar2"></div>
@@ -87,10 +87,10 @@
                         </div>
 
                         <div class="export-btns-container">
-                            <button class="download-btn"  onclick="onDownloadCanvas(event)">
+                            <button class="download-btn" onclick="onDownloadCanvas(event)">
                                 <a class="down-lnk">Download</a>
                             </button>
-                        
+
                             <!-- <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
                                 <input name="img" id="imgData" type="hidden" />
                                 <button class="btn" type="submit">Publish</button>
