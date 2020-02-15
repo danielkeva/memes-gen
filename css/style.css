@@ -62,13 +62,9 @@ main {
 
 /* editor controls */
 
-.editor-container>* {
-    border-radius: 8px;
-}
-
 .editor-container * {
     border-radius: 8px;
-    margin-right: 8px;
+    margin-right: 10px;
 }
 
 .editor-container button {
@@ -91,13 +87,24 @@ main {
     font-size: 0.625rem;
 }
 
-#color {
-    opacity: 0;
+.storke-color-btn::before {
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.storke-color-btn::after {
+    content: "\f1fc";
+    vertical-align: top;
+    font-size: 0.925rem;
+}
+
+.stroke-picker {
+    display: inline-block;
     position: relative;
+    margin: 0;
 }
 
 .color-picker {
-    /* position: absolute; */
     display: inline-block;
     position: relative;
 }
@@ -144,6 +151,7 @@ main {
 .txt-style-container {
     display: flex;
     flex-grow: 2;
+    margin: 0;
 }
 
 .line-btns-container {
@@ -185,5 +193,19 @@ main {
     }
     .editor-container * {
         margin-bottom: 0.5rem;
+        margin-right: 3px;
     }
+    .txt-style-container {
+        width: 100%;
+        justify-content: space-evenly;
+    }
+}
+
+.text-width-calculator {
+    visibility: hidden;
+    position: absolute;
+    height: auto;
+    width: auto;
+    white-space: nowrap;
+    top:-100%;
 }

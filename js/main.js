@@ -2,11 +2,16 @@
 
 var gCanvas;
 var gCtx;
+var isDragging;
+var isDownloading;
 
 function onInit() {
+    isDragging = false;
+    isDownloading = false;
     document.querySelector('.meme-container').style.display = 'none';
     gCanvas = document.getElementById('my-canvas')
     gCtx = gCanvas.getContext('2d')
+
     renderGallery()
     renderCanvas()
 
@@ -22,9 +27,17 @@ function renderCanvas() {
         gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
         lines.forEach(line => {
             if (!line.txt) return
-            drawText(line.txt, line.posX, line.posY, line.size, line.align, line.color, line.font)
+            gCtx.lineWidth = '10'
+            gCtx.strokeStyle = line.stroke
+            gCtx.fillStyle = line.color
+            gCtx.font = `${line.size}px ${line.font}`
+            gCtx.textAlign = line.align
+            gCtx.strokeText(line.txt, line.posX, line.posY)
+            gCtx.fillText(line.txt, line.posX, line.posY)
         })
-        drawMark()
+        if (!isDownloading) {
+            drawMark()
+        }
     }
 
 }
@@ -32,30 +45,27 @@ function renderCanvas() {
 function drawMark() {
     var line = getSelectedLine()
     // if (!line.txt) return
-    var fontsize = line.size;
-    var lineHeight = fontsize * 1.286;
-    var textWidth = gCtx.measureText(line.txt).width;
+    document.querySelector('.txt-input').value = line.txt
+    var lineHeight = line.size * 1.286;
+    var textWidth = getTextWidth()
+    var text = line.txt
+    // var textWidth = gCtx.measureText(text).width;
+    console.log(textWidth)
+    setStartEnd(textWidth, lineHeight)
     gCtx.lineWidth = '4'
+    gCtx.strokeStyle = 'black'
 
     if (line.align === 'center') {
         gCtx.strokeRect(line.posX - textWidth / 2 - 10, line.posY - lineHeight + 10, textWidth + 17, lineHeight);
+        // gCtx.strokeRect(line.coords.xStart, line.coords.yStart - 30, textWidth, lineHeight);
     } else if (line.align === 'end') {
         gCtx.strokeRect(line.posX - textWidth - 8, line.posY - lineHeight + 10, textWidth + 17, lineHeight);
     } else {
         gCtx.strokeRect(line.posX - 8, line.posY - lineHeight + 10, textWidth + 17, lineHeight);
     }
+    // renderCanvas()
 }
 
-
-function drawText(text, x, y, fontSize, align, color, fontFamily) {
-    gCtx.lineWidth = '10'
-    gCtx.strokeStyle = 'black'
-    gCtx.fillStyle = color
-    gCtx.font = fontSize + 'px ' + fontFamily
-    gCtx.textAlign = align
-    gCtx.strokeText(text, x, y)
-    gCtx.fillText(text, x, y)
-}
 
 function onUpdateLine(txt) {
     updateLine(txt)
@@ -102,13 +112,13 @@ function onSetAlign(alignType) {
 }
 
 function onDisplayGallery() {
-    document.querySelector('.gallery').style.display = 'block'
     document.querySelector('.meme-container').style.display = 'none';
+    document.querySelector('.gallery').style.display = 'block'
+    onResetCanvas()
 }
 
-function resizeCanvas() { // not finished 
+function resizeCanvas() {
     var elContainer = document.querySelector('.canvas-container');
-    
     gCanvas.width = elContainer.offsetWidth
     gCanvas.height = elContainer.offsetWidth
     renderCanvas()
@@ -116,20 +126,26 @@ function resizeCanvas() { // not finished
 
 
 function downloadCanvas(elLink) {
+    isDownloading = true;
     renderCanvas()
+
     const data = gCanvas.toDataURL()
     elLink.href = data
     elLink.download = 'meme'
 }
 
-function onSetColor(color) {
-    setColor(color)
+function onSetFontColor(color) {
+    setFontColor(color)
     renderCanvas()
 
 }
 
-function onSwitchLine() {
+function onSetStrokeColor(strokeColor) {
+    setStrokeColor(strokeColor)
+    renderCanvas()
+}
 
+function onSwitchLine() {
     updateSelectedLine()
     renderCanvas()
 }
@@ -140,7 +156,7 @@ function onDeleteLine() {
 }
 
 function onAddLine() {
-    addLine()
+    addLine(gCanvas.width)
     renderCanvas()
 }
 
@@ -148,3 +164,94 @@ function onChangeFont(font) {
     changeFont(font)
     renderCanvas()
 }
+
+
+function onResetCanvas() {
+    document.querySelector('.txt-input').value = ' '
+    resetCanvas()
+}
+
+
+
+
+// dragging
+
+function onIsPainting(ev) {
+    ev = eventHandler(ev)
+    var { offsetX, offsetY } = ev
+
+    console.log(offsetX, offsetY)
+    // if (ev.type === 'mousedown') {
+    //     var { offsetX, offsetY } = ev
+    // }
+    // if (ev.type === 'touchstart') {
+    //     //    debugger;
+    //     var rect = ev.target.getBoundingClientRect();
+    //     var offsetX = ev.targetTouches[0].pageX - rect.left;
+    //     var offsetY = ev.targetTouches[0].pageY - rect.top;
+    // }
+    var idx = checkLine(offsetX, offsetY)
+    if (idx === -1) return
+    updateCoords(offsetX, offsetY, idx)
+    isDragging = true;
+    renderCanvas()
+    // drawMark()
+}
+
+
+
+function eventHandler(ev) {
+    if (ev.type === 'mousedown' || ev.type === 'mousemove' ) {
+        var ev = {
+            offsetX: ev.offsetX,
+            offsetY: ev.offsetY
+        }
+    }
+    if (ev.type === 'touchstart' || ev.type === 'touchmove' ) {
+        //    debugger;
+        var rect = ev.target.getBoundingClientRect();
+        var ev = {
+            offsetX: ev.targetTouches[0].pageX - rect.left,
+            offsetY: ev.targetTouches[0].pageY - rect.top
+        }
+    }
+
+    return ev
+}
+
+
+function onPaint(ev) {
+    ev = eventHandler(ev)
+    var { offsetX, offsetY } = ev
+    var idx = checkLine(offsetX, offsetY)
+    if (idx !== -1) {
+        document.body.style.cursor = 'move';
+    } else document.body.style.cursor = 'default';
+
+    if (!isDragging) return
+    var { offsetX, offsetY } = ev
+
+    updateCoords(offsetX, offsetY)
+    renderCanvas()
+
+}
+
+
+function onStopPaint() {
+    isDragging = false;
+}
+
+
+
+
+
+// function drawText(text, x, y, fontSize, align, color, strokeColor, fontFamily) {
+//     // console.log('x', x, 'y', y)
+//     gCtx.lineWidth = '10'
+//     gCtx.strokeStyle = strokeColor
+//     gCtx.fillStyle = color
+//     gCtx.font = fontSize + 'px ' + fontFamily
+//     gCtx.textAlign = align
+//     gCtx.strokeText(text, x, y)
+//     gCtx.fillText(text, x, y)
+// }

@@ -11,7 +11,10 @@ var gMeme = {
             posY: 100,
             align: 'center',
             color: 'white',
-            font: 'impact'
+            stroke: 'black',
+            font: 'Impact',
+            coords: { xStart: null, xEnd: null, yStart: null, yEnd: null }
+
         }
     ]
 }
@@ -38,10 +41,6 @@ function getSelectedImg() {
 }
 
 
-function getTxtToDisplay() {
-    return gMeme.lines[gMeme.selectedLineIdx].txt
-}
-
 function updateLine(txt) {
     gMeme.lines[gMeme.selectedLineIdx].txt = txt
 }
@@ -65,7 +64,7 @@ function updateSelectedImg(imgId) {
     gMeme.selectedImgId = imgId
 
 }
-function setAlign(alignType){
+function setAlign(alignType) {
     gMeme.lines[gMeme.selectedLineIdx].align = alignType
 }
 
@@ -85,8 +84,12 @@ function updateLinePosY(diff) {
 }
 
 
-function setColor(color) {
+function setFontColor(color) {
     gMeme.lines[gMeme.selectedLineIdx].color = color;
+}
+
+function setStrokeColor(color) {
+    gMeme.lines[gMeme.selectedLineIdx].stroke = color;
 }
 
 function updateSelectedLine() {
@@ -110,8 +113,8 @@ function deleteLine() {
 }
 
 
-function addLine() {
-    var newLine = createLine()
+function addLine(width) {
+    var newLine = createLine(width)
     gMeme.lines.push(newLine)
     var newLineIdx = gMeme.lines.findIndex(line => {
         return line === newLine
@@ -119,16 +122,19 @@ function addLine() {
     gMeme.selectedLineIdx = newLineIdx
 }
 
-function createLine() {
+function createLine(width) {
     if (gMeme.lines.length === 1) {
         var line = {
 
             txt: null,
             size: 70,
-            posX: 225,
-            posY: 400,
+            posX: width / 2,
+            posY: width - 50,
             align: 'center',
-            color: 'white'
+            color: 'white',
+            stroke: 'black',
+            font: 'Impact',
+            coords: { xStart: null, xEnd: null, yStart: null, yEnd: null }
         }
         return line
     }
@@ -138,10 +144,93 @@ function createLine() {
 
         txt: null,
         size: 70,
-        posX: 225,
-        posY: 225,
+        posX: width / 2,
+        posY: width / 2,
         align: 'center',
-        color: 'white'
+        color: 'white',
+        stroke: 'black',
+        font: 'Impact',
+        coords: { xStart: null, xEnd: null, yStart: null, yEnd: null }
     }
     return line
+}
+
+
+function resetCanvas() {
+    gMeme = {
+        selectedImgId: 1,
+        selectedLineIdx: 0,
+        lines: [
+            {
+
+                txt: null,
+                size: 70,
+                posX: 225,
+                posY: 100,
+                align: 'center',
+                color: 'white',
+                stroke: 'black',
+                font: 'Impact',
+                coords: { xStart: null, xEnd: null, yStart: null, yEnd: null }
+            }
+        ]
+    }
+
+}
+
+function updateCoords(newX, newY, idx) {
+    if (idx || idx === 0) gMeme.selectedLineIdx = idx
+    gMeme.lines[gMeme.selectedLineIdx].posX = newX
+    gMeme.lines[gMeme.selectedLineIdx].posY = newY
+
+}
+
+
+
+function checkLine(offsetX, offsetY) {
+    var idx = gMeme.lines.findIndex(line => {
+        return offsetX > line.coords.xStart
+            && offsetX < line.coords.xEnd
+            && offsetY > line.coords.yStart
+            && offsetY < line.coords.yEnd
+    })
+
+    // if (idx !== -1) {
+    //     gMeme.selectedLineIdx = idx
+    // }
+
+    return idx
+}
+
+
+function setStartEnd(width, height) {
+
+    var currLine = gMeme.lines[gMeme.selectedLineIdx]
+
+    currLine.coords.yStart = currLine.posY - height / 2
+    currLine.coords.yEnd = currLine.posY + height / 2
+
+    if (currLine.align === 'center') {
+        currLine.coords.xStart = currLine.posX - width / 2
+        currLine.coords.xEnd = currLine.posX + width / 2
+    } else if (currLine.align === 'end') {
+        currLine.coords.xStart = currLine.posX - width
+        currLine.coords.xEnd = currLine.posX
+    } else {
+        currLine.coords.xStart = currLine.posX
+        currLine.coords.xEnd = currLine.posX + width
+    }
+
+
+}
+
+
+function getTextWidth() {
+    var line = getSelectedLine()
+    var elCalculator = document.querySelector('.text-width-calculator')
+    elCalculator.innerText = line.txt;
+    elCalculator.style.fontSize = line.size + 'px';
+    elCalculator.style.fontFamily = line.font;
+    var width = (+elCalculator.clientWidth);
+    return width
 }
