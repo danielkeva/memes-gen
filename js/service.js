@@ -175,7 +175,7 @@ function resetCanvas() {
             }
         ]
     }
-
+    gImgs = createImgs()
 }
 
 function updateCoords(newX, newY, idx) {
@@ -233,4 +233,13 @@ function getTextWidth() {
     elCalculator.style.fontFamily = line.font;
     var width = (+elCalculator.clientWidth);
     return width
+}
+
+function updateNewImg(img) {
+
+
+    gImgs.push(
+        { id: gImgs.length + 1, url: img.src }
+    )
+    gMeme.selectedImgId = gImgs.length
 }

@@ -14,6 +14,11 @@
     <nav>
         <div class="main-nav-container">
             <div class="logo">Memegen</div>
+            <div class="menu-btn" onclick="toggleNav(this)">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </div>
             <ul class="main-nav  flex ">
                 <li><a onclick="onDisplayGallery()" href="#">My gallery</a></li>
                 <li><a href="#">About</a></li>
@@ -30,7 +35,9 @@
                 <div class="canvas-main-container">
 
                     <div class="canvas-container">
-                        <canvas id="my-canvas" height="450" width="450" ontouchstart="onIsPainting(event)" onmousedown="onIsPainting(event)"  ontouchmove="onPaint(event)" onmousemove="onPaint(event)"  ontouchend="onStopPaint()" onmouseout="onStopPaint()"  onmouseup="onStopPaint()">
+                        <canvas id="my-canvas" height="450" width="450" ontouchstart="onStartMove(event)"
+                            onmousedown="onStartMove(event)" ontouchmove="onMove(event)" onmousemove="onMove(event)"
+                            ontouchend="onStopMove()" onmouseout="onStopMove()" onmouseup="onStopMove()">
                         </canvas>
                     </div>
 
@@ -84,9 +91,18 @@
                         </div>
 
                         <div class="export-btns-container">
-                            <button class="download-btn"> <a href="#" onclick="downloadCanvas(this)"
-                                    download="">Download</a></button>
-                            <button class="share-btn">Share</button>
+                            <button class="download-btn"  onclick="onDownloadCanvas(event)">
+                                <a class="down-lnk">Download</a>
+                            </button>
+                        
+                            <!-- <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
+                                <input name="img" id="imgData" type="hidden" />
+                                <button class="btn" type="submit">Publish</button>
+        
+                                <div class="share-container"></div>
+                              </form>
+                             -->
+
                         </div>
                     </div>
 
@@ -95,6 +111,8 @@
             </section>
 
             <section class="gallery">
+                <input type="file" class="file-input btn" name="image" onchange="onImgInput(event)" />
+                <div class="share-container"></div>
                 <div class="gallery-container">
 
                 </div>
@@ -110,7 +128,7 @@
         <small class="coffe-rights">&copy Coffe Rights</small>
     </footer>
 
-<div class="text-width-calculator"></div>
+    <div class="text-width-calculator"></div>
     <script src="https://kit.fontawesome.com/e180c8193f.js" crossorigin="anonymous"></script>
     <script src="js/service.js"></script>
     <script src="js/main.js"></script>
