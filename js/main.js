@@ -82,7 +82,7 @@ function renderCanvas(newImg) {
 
 function drawMark() {
     var line = getSelectedLine()
-    // if (!line.txt) return
+    if (!line.txt) return
     document.querySelector('.txt-input').value = line.txt
     var lineHeight = line.size * 1.286;
     var textWidth = getTextWidth()
