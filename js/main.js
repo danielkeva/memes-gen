@@ -258,8 +258,7 @@ function onStopMove() {
 }
 
 
-{/* <a href="#"  onclick="onDownloadCanvas(this)"
-download="">Download</a></button> */}
+
 function onDownloadCanvas(ev) {
     // ev.preventDefault()
     if (isDownloadClicked) return
@@ -271,9 +270,7 @@ function onDownloadCanvas(ev) {
         downloadCanvas(ev)
         isDownloadClicked = false
     }, 0);
-    // setTimeout(() => {
-
-
+    
 }
 
 function downloadCanvas() {

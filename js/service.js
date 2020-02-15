@@ -195,10 +195,6 @@ function checkLine(offsetX, offsetY) {
             && offsetY < line.coords.yEnd
     })
 
-    // if (idx !== -1) {
-    //     gMeme.selectedLineIdx = idx
-    // }
-
     return idx
 }
 
