@@ -12,6 +12,29 @@ function onInit() {
     gCanvas = document.getElementById('my-canvas')
     gCtx = gCanvas.getContext('2d')
 
+    gCanvas.addEventListener("touchstart", touchHandler, true);
+    gCanvas.addEventListener("touchmove", touchHandler, true);
+    gCanvas.addEventListener("touchend", touchHandler, true);
+    gCanvas.addEventListener("touchcancel", touchHandler, true);
+    
+    function touchHandler(ev) {
+        ev.preventDefault();
+        let touch = ev.changedTouches[0];
+        let simulatedEvent = document.createEvent("MouseEvent");
+        simulatedEvent.initMouseEvent({
+            touchstart: "mousedown",
+            touchmove: "mousemove",
+            touchend: "mouseup"
+        }[ev.type], true, true, window, 1,
+            touch.screenX, touch.screenY,
+            touch.clientX, touch.clientY, false,
+            false, false, false, 0, null);
+    
+        touch.target.dispatchEvent(simulatedEvent);
+    }
+    
+
+
     renderGallery()
     renderCanvas()
 
