@@ -16,7 +16,7 @@ function onInit() {
     gCanvas.addEventListener("touchmove", touchHandler, true);
     gCanvas.addEventListener("touchend", touchHandler, true);
     gCanvas.addEventListener("touchcancel", touchHandler, true);
-    
+
     function touchHandler(ev) {
         ev.preventDefault();
         let touch = ev.changedTouches[0];
@@ -200,7 +200,7 @@ function onResetCanvas() {
 // dragging
 
 function onIsPainting(ev) {
-    ev = eventHandler(ev)
+    // ev = eventHandler(ev)
     var { offsetX, offsetY } = ev
 
     console.log(offsetX, offsetY)
@@ -223,28 +223,28 @@ function onIsPainting(ev) {
 
 
 
-function eventHandler(ev) {
-    if (ev.type === 'mousedown' || ev.type === 'mousemove' ) {
-        var ev = {
-            offsetX: ev.offsetX,
-            offsetY: ev.offsetY
-        }
-    }
-    if (ev.type === 'touchstart' || ev.type === 'touchmove' ) {
-        //    debugger;
-        var rect = ev.target.getBoundingClientRect();
-        var ev = {
-            offsetX: ev.targetTouches[0].pageX - rect.left,
-            offsetY: ev.targetTouches[0].pageY - rect.top
-        }
-    }
+// function eventHandler(ev) {
+//     if (ev.type === 'mousedown' || ev.type === 'mousemove' ) {
+//         var ev = {
+//             offsetX: ev.offsetX,
+//             offsetY: ev.offsetY
+//         }
+//     }
+//     if (ev.type === 'touchstart' || ev.type === 'touchmove' ) {
+//         //    debugger;
+//         var rect = ev.target.getBoundingClientRect();
+//         var ev = {
+//             offsetX: ev.targetTouches[0].pageX - rect.left,
+//             offsetY: ev.targetTouches[0].pageY - rect.top
+//         }
+//     }
 
-    return ev
-}
+//     return ev
+// }
 
 
 function onPaint(ev) {
-    ev = eventHandler(ev)
+    // ev = eventHandler(ev)
     var { offsetX, offsetY } = ev
     var idx = checkLine(offsetX, offsetY)
     if (idx !== -1) {
