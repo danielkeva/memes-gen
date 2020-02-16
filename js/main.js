@@ -254,35 +254,32 @@ function onMove(ev) {
 
 function onStopMove() {
     isDragging = false;
-
 }
 
 
 
-function onDownloadCanvas(ev) {
-    // ev.preventDefault()
+function onDownloadCanvas() {
+
     if (isDownloadClicked) return
     isMark = false
 
     renderCanvas()
     setTimeout(() => {
 
-        downloadCanvas(ev)
-        isDownloadClicked = false
+        downloadCanvas()
+        
     }, 0);
-    
+
 }
 
 function downloadCanvas() {
-
-
     var elLink = document.querySelector('.down-lnk')
     var data = gCanvas.toDataURL()
     elLink.href = data
     elLink.download = 'meme.png'
-    isDownloadClicked = true
+    isDownloadClicked = true  // prevent infinit downloads
     elLink.click()
-
+    
 }
 
 

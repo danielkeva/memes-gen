@@ -21,6 +21,7 @@ var gMeme = {
 
 var gImgs = createImgs()
 
+var gEmoji = ['😱',]
 
 function getLines() {
     return gMeme.lines
