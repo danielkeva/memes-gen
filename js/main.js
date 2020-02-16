@@ -107,7 +107,7 @@ function drawMark() {
 
 function onUpdateLine(txt) {
     updateLine(txt)
-    gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+    // gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
     isMark = true
     renderCanvas()
 }
