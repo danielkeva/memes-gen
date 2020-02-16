@@ -70,6 +70,9 @@ main {
 
 .editor-container * {
     border-radius: 8px;
+}
+
+.editor-container * :not(:last-child) {
     margin-right: 10px;
 }
 
@@ -112,12 +115,13 @@ main {
 .stroke-picker {
     display: inline-block;
     position: relative;
-    margin: 0;
+    margin-right: 0;
 }
 
 .color-picker {
     display: inline-block;
     position: relative;
+    margin: 0;
 }
 
 #color {
@@ -125,7 +129,7 @@ main {
     position: absolute;
     left: 0;
     top: 0;
-    width: 100%;
+    min-width: 3.75rem;
     height: 3.75rem;
 }
 
@@ -137,8 +141,6 @@ main {
 
 .export-btns-container button {
     font-size: 1.25rem;
-    width: 120px;
-    height: 60px;
 }
 
 .editor-container {
@@ -244,19 +246,15 @@ main {
         flex-direction: column;
         justify-content: center;
         position: absolute;
-        
         width: 100%;
         overflow-x: hidden;
         background-color: #ff7f00;
         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0);
         opacity: 0;
         /* transform: translate(-6%, 22%); */
-        
         display: none;
-        
     }
     .menu-open .main-nav {
-        
         opacity: 1;
         display: flex;
         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.6);
